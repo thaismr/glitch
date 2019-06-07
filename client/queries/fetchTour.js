@@ -5,6 +5,7 @@ export default gql`
     tour(id: $id) {
       id
       title
+      content
     }
   }
 `

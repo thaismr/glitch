@@ -13,6 +13,7 @@ class TourShow extends Component {
       <div>
         <Link to="/">Back</Link>
         <h3>{tour.title}</h3>
+        <div>{tour.content}</div>
       </div>
     )
   }
