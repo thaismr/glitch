@@ -7,6 +7,7 @@ import { ApolloProvider } from 'react-apollo'
 import App from './components/App'
 import TourList from './components/TourList'
 import TourCreate from './components/TourCreate'
+import UserCreate from './components/UserCreate'
 
 const client = new ApolloClient({})
 
@@ -16,7 +17,8 @@ const Root = () => {
       <Router history={hashHistory}>
         <Route path="/" component={App}>
           <IndexRoute component={TourList} />
-          <Route path="tour/new" component={TourCreate} />
+          <Route path="tours/new" component={TourCreate} />
+          <Route path="users/new" component={UserCreate} />
         </Route>
       </Router>
     </ApolloProvider>

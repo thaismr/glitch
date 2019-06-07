@@ -1,13 +1,26 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
+import { Link } from 'react-router'
+import query from '../queries/fetchTours'
 
 class TourList extends Component {
+  onTourDelete(id) {
+    this.props.mutate({ variables: { id } })
+      .then(() => this.props.data.refetch())
+  }
+
   renderTours() {
-    return this.props.data.tours.map(tour => {
+    return this.props.data.tours.map(({ id, title }) => {
       return (
-        <li key={tour.id} className="collection-item">
-          {tour.title}
+        <li key={id} className="collection-item">
+          {title}
+          <i
+            className='material-icons'
+            onClick={() => this.onTourDelete(id)}
+          >
+            delete
+          </i>
         </li>
       )
     })
@@ -17,20 +30,30 @@ class TourList extends Component {
     if(this.props.data.loading) { return <div>Loading...</div>}
 
     return (
-      <ul className="collection">
-        {this.renderTours()}
-      </ul>
+      <div>
+        <ul className="collection">
+          {this.renderTours()}
+        </ul>
+        <Link
+          to="/tours/new"
+          className="btn-floating btn-large red right"
+        >
+          <i className="material-icons">add</i>
+        </Link>
+      </div>
     )
   }
 }
 
-const query = gql`
-  {
-    tours {
+const mutation = gql`
+  mutation DeleteTour($id: ID) {
+    deleteTour(id: $id) {
       id
-      title
     }
   }
 `
+
 // calls graphql, wich returns a function, and calls that function
-export default graphql(query)(TourList)
+export default graphql(mutation)(
+  graphql(query)(TourList)
+)
