@@ -14,7 +14,9 @@ class TourList extends Component {
     return this.props.data.tours.map(({ id, title }) => {
       return (
         <li key={id} className="collection-item">
-          {title}
+          <Link to={`/tours/${id}`}>
+            {title}
+          </Link>
           <i
             className='material-icons'
             onClick={() => this.onTourDelete(id)}

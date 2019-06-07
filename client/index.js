@@ -1,3 +1,4 @@
+import './style/style.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, Route, hashHistory, IndexRoute } from 'react-router'
@@ -6,6 +7,7 @@ import { ApolloProvider } from 'react-apollo'
 
 import App from './components/App'
 import TourList from './components/TourList'
+import TourShow from './components/TourShow'
 import TourCreate from './components/TourCreate'
 import UserCreate from './components/UserCreate'
 
@@ -19,6 +21,7 @@ const Root = () => {
           <IndexRoute component={TourList} />
           <Route path="tours/new" component={TourCreate} />
           <Route path="users/new" component={UserCreate} />
+          <Route path="tours/:id" component={TourShow} />
         </Route>
       </Router>
     </ApolloProvider>
