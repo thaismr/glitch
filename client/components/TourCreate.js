@@ -53,6 +53,7 @@ class TourCreate extends Component {
 const mutation = gql`
   mutation AddTour($title: String, $content: String) {
     addTour(title: $title, content: $content) {
+      id
       title
     }
   }

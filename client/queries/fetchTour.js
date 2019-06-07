@@ -6,6 +6,10 @@ export default gql`
       id
       title
       content
+      comments {
+        id
+        content
+      }
     }
   }
 `

@@ -18,7 +18,7 @@ class TourList extends Component {
             {title}
           </Link>
           <i
-            className='material-icons'
+            className="material-icons"
             onClick={() => this.onTourDelete(id)}
           >
             delete

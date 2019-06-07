@@ -11,7 +11,9 @@ import TourShow from './components/TourShow'
 import TourCreate from './components/TourCreate'
 import UserCreate from './components/UserCreate'
 
-const client = new ApolloClient({})
+const client = new ApolloClient({
+  dataIdFromObject: o => o.id
+})
 
 const Root = () => {
   return (
