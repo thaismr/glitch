@@ -1,0 +1,33 @@
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+
+const UserSchema = new Schema({
+  name: { type: String },
+  exp: { type: Number, default: 0 },
+  level: {
+    type: Schema.Types.ObjectId,
+    ref: 'level'
+  },
+  tours: [{
+    type: Schema.Types.ObjectId,
+    ref: 'tour'
+  }]
+})
+
+UserSchema.statics.addExp = (id) => {
+  const User = mongoose.model('user')
+
+  return User.findById(id)
+    .then(user => {
+      ++user.exp
+      return user.save()
+    })
+}
+
+UserSchema.statics.findTours = function(id) {
+  return this.findById(id)
+  .populate('tours')
+  .then(user => user.tours)
+}
+
+mongoose.model('user', UserSchema)
