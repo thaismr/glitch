@@ -1,11 +1,19 @@
 import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
 import { Link } from 'react-router'
 import CommentCreate from './CommentCreate'
 import CommentList from './CommentList'
 import fetchTour from '../queries/fetchTour'
 
 class TourShow extends Component {
+
+  onVoteUp(id) {
+    this.props.mutate({
+      variables : { id }
+    })
+  }
+
   render() {
     const { tour } = this.props.data
 
@@ -14,8 +22,15 @@ class TourShow extends Component {
     return (
       <div>
         <Link to="/">Back</Link>
-        <h3>{tour.title}</h3>
+        <h4>{tour.title}</h4>
         <div>{tour.content}</div>
+        <div className="upvotes">
+          <i
+            className="material-icons"
+            onClick={() => this.onVoteUp(this.props.params.id)}
+          >thumb_up</i>
+          {tour.upvotes}
+        </div>
         <CommentCreate tourId={this.props.params.id} />
         <CommentList comments={tour.comments} />
       </div>
@@ -23,6 +38,17 @@ class TourShow extends Component {
   }
 }
 
-export default graphql(fetchTour, {
-  options: (props) => { return { variables: { id: props.params.id }}}
-})(TourShow)
+const mutation = gql`
+  mutation UpVote($id: ID) {
+    upTour(id: $id) {
+      id
+      upvotes
+    }
+  }
+`
+
+export default graphql(mutation)(
+  graphql(fetchTour, {
+    options: (props) => { return { variables: { id: props.params.id }}}
+  })(TourShow)
+)
