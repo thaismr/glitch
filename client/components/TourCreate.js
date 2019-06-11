@@ -55,6 +55,7 @@ const mutation = gql`
     addTour(title: $title, content: $content) {
       id
       title
+      upvotes
     }
   }
 `
