@@ -42,8 +42,8 @@ const mutations = new GraphQLObjectType({
       type: TourType,
       args: {
         title: { type: GraphQLString },
-        user: { type: new GraphQLNonNull(GraphQLID) },
-        level: { type: new GraphQLNonNull(GraphQLID) },
+        user: { type: GraphQLID },
+        level: { type: GraphQLID },
         content: { type: GraphQLString }
       },
       resolve(parentValue, {title, user, level, content}) {
@@ -82,10 +82,10 @@ const mutations = new GraphQLObjectType({
     deleteTour: {
       type: TourType,
       args: {
-        id: { type: new GraphQLNonNull(GraphQLID) }
+        id: { type: GraphQLID }
       },
       resolve(parentValue, { id }) {
-        return Tour.deleteOne({ _id: id })
+        return Tour.remove({ _id: id })
       }
     }
   }
