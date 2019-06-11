@@ -39,6 +39,12 @@ UserSchema.pre('save', function save(next) {
   })
 })
 
+UserSchema.methods.comparePassword = function comparePassword(candidatePassword, cb) {
+  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+    cb(err, isMatch)
+  })
+}
+
 UserSchema.statics.addExp = (id) => {
   const User = mongoose.model('user')
 
