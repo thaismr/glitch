@@ -16,9 +16,22 @@ const LevelType = require('./level_type')
 const TourType = require('./tour_type')
 const CommentType = require('./comment_type')
 
+const AuthService = require('../services/auth')
+
+
 const mutations = new GraphQLObjectType({
   name: 'Mutations',
   fields: {
+    signup : {
+      type: UserType,
+      args: {
+        email: { type: GraphQLString },
+        password: { type: GraphQLString }
+      },
+      resolve(parentValue, { email, password }, req) {
+        return AuthService.signup({ email, password, req })
+      }
+    },
     addUser: {
       type: UserType,
       args: {
