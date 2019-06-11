@@ -8,9 +8,17 @@ import fetchTour from '../queries/fetchTour'
 
 class TourShow extends Component {
 
-  onVoteUp(id) {
+  onVoteUp(id, upvotes) {
     this.props.mutate({
-      variables : { id }
+      variables : { id },
+      optimisticResponse: {
+        __typename: 'Mutation',
+        upTour: {
+          id: id,
+          __typename: 'TourType',
+          upvotes: upvotes + 1
+        }
+      }
     })
   }
 
@@ -27,7 +35,7 @@ class TourShow extends Component {
         <div className="upvotes">
           <i
             className="material-icons"
-            onClick={() => this.onVoteUp(this.props.params.id)}
+            onClick={() => this.onVoteUp(this.props.params.id, tour.upvotes)}
           >thumb_up</i>
           {tour.upvotes}
         </div>
