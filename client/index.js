@@ -13,6 +13,7 @@ import TourList from './components/TourList'
 import TourShow from './components/TourShow'
 import TourCreate from './components/TourCreate'
 import UserCreate from './components/UserCreate'
+import requireAuth from './components/requireAuth'
 
 const networkInterface = createNetworkInterface({
   uri: '/graphql',
@@ -34,7 +35,7 @@ const Root = () => {
           <IndexRoute component={TourList} />
           <Route path="login" component={LoginForm} />
           <Route path="signup" component={SignupForm} />
-          <Route path="dashboard" component={Dashboard} />
+          <Route path="dashboard" component={requireAuth(Dashboard)} />
           <Route path="tours/new" component={TourCreate} />
           <Route path="users/new" component={UserCreate} />
           <Route path="tours/:id" component={TourShow} />
