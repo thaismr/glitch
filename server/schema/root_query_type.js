@@ -8,6 +8,7 @@ const {
 } = graphql
 const UserType = require('./user_type')
 const TourType = require('./tour_type')
+const LevelType = require('./level_type')
 const User = mongoose.model('user')
 const Tour = mongoose.model('tour')
 
@@ -48,6 +49,12 @@ const RootQuery = new GraphQLObjectType({
       },
       resolve(parentValue, { id }) {
         return Tour.findById(id)
+      }
+    },
+    levels: {
+      type: new GraphQLList(LevelType),
+      resolve() {
+        return Level.find({})
       }
     }
   })

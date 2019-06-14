@@ -27,10 +27,13 @@ class TourShow extends Component {
 
     if (!tour) { return <div>Loading...</div> }
 
+    console.log({ tour })
+
     return (
       <div>
         <Link to="/">Back</Link>
         <h4>{tour.title}</h4>
+        {tour.user.name} | {tour.level.name}
         <div>{tour.content}</div>
         <div className="upvotes">
           <i

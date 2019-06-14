@@ -14,17 +14,25 @@ class TourCreate extends Component {
     }
   }
 
-  onSubmit(event) {
+  onSubmit(e) {
     // prevent form from being submitted by the browser:
-    event.preventDefault()
+    e.preventDefault()
+
+    const userId = this.props.data.currentUser.id
+
+    console.log(this.state)
 
     this.props.mutate({
       variables: {
         title: this.state.title,
+        user: userId,
+        level: '5cf81292b8e50b5e06ace414',
         content: this.state.content
       },
       refetchQueries: [{ query }]
     }).then(() => hashHistory.push('/'))
+
+
   }
 
   render() {
@@ -32,18 +40,19 @@ class TourCreate extends Component {
       <div>
         <Link to="/">Back</Link>
 
-        <h3>Create a new Tour:</h3>
-        <form onSubmit={this.onSubmit.bind(this)}>
+        <h4>Create a new Tour:</h4>
+        <form onSubmit={ this.onSubmit.bind(this) }>
           <label>Tour title:</label>
           <input
-            onChange={event => this.setState({ title: event.target.value })}
             value={this.state.title}
+            onChange={(e) => this.setState({ title: e.target.value })}
           />
           <label>Content:</label>
           <input
-            onChange={event => this.setState({ content: event.target.value })}
             value={this.state.content}
+            onChange={(e) => this.setState({ content: e.target.value })}
           />
+          <button className="btn">Submit</button>
         </form>
       </div>
     )
@@ -51,11 +60,10 @@ class TourCreate extends Component {
 }
 
 const mutation = gql`
-  mutation AddTour($title: String, $content: String) {
-    addTour(title: $title, content: $content) {
+  mutation AddTour($title: String, $user: ID, $level: ID, $content: String) {
+    addTour(title: $title, user: $user, level: $level, content: $content) {
       id
       title
-      upvotes
     }
   }
 `

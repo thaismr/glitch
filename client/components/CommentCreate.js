@@ -11,8 +11,8 @@ class CommentCreate extends Component {
     }
   }
 
-  onSubmit(event) {
-    event.preventDefault()
+  onSubmit(e) {
+    e.preventDefault()
 
     this.props.mutate({
       variables: {
@@ -28,7 +28,7 @@ class CommentCreate extends Component {
         <label>Add a comment:</label>
         <input
           value={this.state.content}
-          onChange={(event) => this.setState({ content: event.target.value })}
+          onChange={(e) => this.setState({ content: e.target.value })}
         />
       </form>
     )

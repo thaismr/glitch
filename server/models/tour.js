@@ -70,7 +70,6 @@ TourSchema.statics.addTour = (title, userId, levelId, content) => {
         })
     })
 
-
 }
 
 mongoose.model('tour', TourSchema)

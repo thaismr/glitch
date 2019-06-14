@@ -5,6 +5,12 @@ export default gql`
     tour(id: $id) {
       id
       title
+      level {
+        name
+      }
+      user {
+        name
+      }
       content
       upvotes
       comments {
