@@ -24,7 +24,7 @@ mongoose.Promise = global.Promise
 mongoose.connect(MONGO_URI, { useNewUrlParser: true })
 const db = mongoose.connection
   .once('open', () => console.log('Connected to MongoLab instance'))
-  .on('error', () => console.log('Error connecting to MongoLab:', error))
+  .on('error', () => console.log('Error connecting to MongoLab:'))
 
   /*
   mongoose.connect(MONGO_URI, {

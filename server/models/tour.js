@@ -2,6 +2,8 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const User = mongoose.model('user')
 const Level = mongoose.model('level')
+const Channel = mongoose.model('channel')
+const Comment = mongoose.model('comment')
 
 const TourSchema = new Schema({
   title: { type: String },
@@ -12,6 +14,10 @@ const TourSchema = new Schema({
   level: {
     type: Schema.Types.ObjectId,
     ref: 'level'
+  },
+  channel: {
+    type: Schema.Types.ObjectId,
+    ref: 'channel'
   },
   upvotes: { type: Number, default: 0 },
   content: { type: String },
@@ -32,7 +38,7 @@ TourSchema.statics.upVote = (id) => {
 }
 
 TourSchema.statics.addComment = function(userId, tourId, content) {
-  const Comment = mongoose.model('comment')
+  //const Comment = mongoose.model('comment')
 
   return this.findById(tourId)
     .then(tour => {
@@ -47,29 +53,34 @@ TourSchema.statics.addComment = function(userId, tourId, content) {
     })
 }
 
+/*
 TourSchema.statics.findComments = function(id) {
-  return this.findById(id)
-  .populate('comments')
-  .then(tour => tour.comments)
+  return this.findById(id).populate('comments')
+    .then(tour => tour.comments)
 }
+*/
 
-TourSchema.statics.addTour = (title, userId, levelId, content) => {
-
+TourSchema.statics.addTour = (title, userId, levelId, channelId, content) => {
   const Tour = mongoose.model('tour')
 
-  // create tour, update user, level and return updated tour:
+  // create tour; update user, level and channel; save all; then, return updated tour:
   return User.findById(userId)
     .then(user => {
       return Level.findById(levelId)
         .then(level => {
-          const tour = new Tour({ title, user, level, content })   // prepare our Tour schema
-          user.tours.push(tour)                             // add tour to user's list
-          level.tours.push(tour)                            // add tour to level's list
-          return Promise.all([ tour.save(), user.save(), level.save() ])
-            .then(([ tour, user, level ]) => tour)
+          return Channel.findById(channelId)
+            .then(channel => {
+              const tour = new Tour({ title, user, level, channel, content })   // prepare our Tour schema
+              user.tours.push(tour)                             // add tour to user's list
+              level.tours.push(tour)                            // add tour to level's list
+              channel.tours.push(tour)                          // add tour to channel's list
+              return Promise.all([ tour.save(), user.save(), level.save(), channel.save() ])
+                .then(
+                  ([ tour, user, level, channel ]) => tour
+                )
+            })
         })
     })
-
 }
 
 mongoose.model('tour', TourSchema)

@@ -7,10 +7,11 @@ const {
   GraphQLList,
   GraphQLString
 } = graphql
+const Tour = mongoose.model('tour')
 const UserType = require('./user_type')
 const LevelType = require('./level_type')
+const ChannelType = require('./channel_type')
 const CommentType = require('./comment_type')
-const Tour = mongoose.model('tour')
 
 const TourType = new GraphQLObjectType({
   name: 'TourType',
@@ -21,18 +22,21 @@ const TourType = new GraphQLObjectType({
       type: require('./user_type'),
       resolve(parentValue) {
         return Tour.findById(parentValue).populate('user')
-          .then(tour => {
-            return tour.user
-          })
+          .then(tour => tour.user)
       }
     },
     level: {
-      type: LevelType,
+      type: require('./level_type'),
       resolve(parentValue) {
         return Tour.findById(parentValue).populate('level')
-          .then(tour => {
-            return tour.level
-          })
+          .then(tour => tour.level)
+      }
+    },
+    channel: {
+      type: require('./channel_type'),
+      resolve(parentValue) {
+        return Tour.findById(parentValue).populate('channel')
+          .then(tour => tour.channel)
       }
     },
     upvotes: { type: GraphQLInt },
@@ -40,7 +44,9 @@ const TourType = new GraphQLObjectType({
     comments: {
       type: new GraphQLList(CommentType),
       resolve(parentValue) {
-        return Tour.findComments(parentValue.id)
+        //return Tour.findComments(parentValue.id)
+        return Tour.findById(parentValue).populate('comments')
+          .then(tour => tour.comments)
       }
     }
   })

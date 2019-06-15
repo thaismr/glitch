@@ -15,6 +15,14 @@ const UserSchema = new Schema({
   tours: [{
     type: Schema.Types.ObjectId,
     ref: 'tour'
+  }],
+  teasers: [{
+    type: Schema.Types.ObjectId,
+    ref: 'teaser'
+  }],
+  comments: [{
+    type: Schema.Types.ObjectId,
+    ref: 'comment'
   }]
 })
 
@@ -55,10 +63,18 @@ UserSchema.statics.addExp = (id) => {
     })
 }
 
+/* IRRELEVANT ?
 UserSchema.statics.findTours = function(id) {
   return this.findById(id)
   .populate('tours')
   .then(user => user.tours)
 }
+
+UserSchema.statics.findTeasers = function(id) {
+  return this.findById(id)
+  .populate('teasers')
+  .then(user => user.teasers)
+}
+*/
 
 mongoose.model('user', UserSchema)

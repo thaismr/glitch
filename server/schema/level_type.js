@@ -8,6 +8,8 @@ const {
   GraphQLObjectType
 } = graphql
 const Level = mongoose.model('level')
+const ChannelType = require('./channel_type')
+const TourType = require('./tour_type')
 
 const LevelType = new GraphQLObjectType({
   name: 'LevelType',
@@ -15,16 +17,21 @@ const LevelType = new GraphQLObjectType({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
     exp: { type: GraphQLInt },
-    tours: {
-      type: new GraphQLList(require('./level_type')),
+    description: { type: GraphQLString },
+    channels: {
+      type: new GraphQLList(ChannelType),
       resolve(parentValue) {
-        return Level.findTours(parentValue.id)
+        //return Level.findChannels(parentValue.id)
+        return Level.findById(parentValue).populate('channels')
+          .then(level => level.channels)
       }
     },
-    users: {
-      type: new GraphQLList(require('./user_type')),
+    tours: {
+      type: new GraphQLList(TourType),
       resolve(parentValue) {
-        return Level.findUsers(parentValue.id)
+        //return Level.findTours(parentValue.id)
+        return Level.findById(parentValue).populate('tours')
+          .then(level => level.tours)
       }
     }
   })

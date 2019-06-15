@@ -7,31 +7,45 @@ const {
   GraphQLString,
   GraphQLList
 } = graphql
+const User = mongoose.model('user')
 const LevelType = require('./level_type')
 const TourType = require('./tour_type')
-const User = mongoose.model('user')
-//const Tour = mongoose.model('tour')
+const TeaserType = require('./teaser_type')
+const CommentType = require('./comment_type')
 
 const UserType = new GraphQLObjectType({
   name: 'UserType',
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
-    email: { type: GraphQLString },
+    //email: { type: GraphQLString },
     exp: { type: GraphQLInt },
     level: {
       type: LevelType,
       resolve(parentValue) {
         return User.findById(parentValue).populate('level')
-          .then(user => {
-            return user.level
-          })
+          .then(user => user.level)
       }
     },
     tours: {
       type: new GraphQLList(TourType),
       resolve(parentValue) {
-        return User.findTours(parentValue.id)
+        return User.findById(parentValue).populate('tours')
+          .then(user => user.tours)
+      }
+    },
+    teasers: {
+      type: new GraphQLList(TeaserType),
+      resolve(parentValue) {
+        return User.findById(parentValue).populate('teasers')
+          .then(user => user.teasers)
+      }
+    },
+    comments: {
+      type: new GraphQLList(CommentType),
+      resolve(parentValue) {
+        return User.findById(parentValue).populate('comments')
+          .then(user => user.comments)
       }
     }
   })

@@ -8,11 +8,16 @@ const {
 } = graphql
 const UserType = require('./user_type')
 const TourType = require('./tour_type')
+const TeaserType = require('./teaser_type')
 const LevelType = require('./level_type')
+const ChannelType = require('./channel_type')
+const Channel = mongoose.model('channel')
+const Level = mongoose.model('level')
 const User = mongoose.model('user')
 const Tour = mongoose.model('tour')
+const Teaser = mongoose.model('teaser')
 
-const RootQuery = new GraphQLObjectType({
+const RootQueryType = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: () => ({
     currentUser: {
@@ -36,6 +41,18 @@ const RootQuery = new GraphQLObjectType({
         return User.findById(id)
       }
     },
+    levels: {
+      type: new GraphQLList(LevelType),
+      resolve() {
+        return Level.find({})
+      }
+    },
+    channels: { //maybe irrelevant
+      type: new GraphQLList(ChannelType),
+      resolve() {
+        return Channel.find({})
+      }
+    },
     tours: {
       type: new GraphQLList(TourType),
       resolve() {
@@ -51,13 +68,16 @@ const RootQuery = new GraphQLObjectType({
         return Tour.findById(id)
       }
     },
-    levels: {
-      type: new GraphQLList(LevelType),
-      resolve() {
-        return Level.find({})
+    teaser: {
+      type: TeaserType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parentValue, { id }) {
+        return Teaser.findById(id)
       }
     }
   })
 })
 
-module.exports = RootQuery
+module.exports = RootQueryType

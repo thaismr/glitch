@@ -1,4 +1,6 @@
 require('./user')
 require('./level')
-require('./tour')
+require('./channel')
 require('./comment')
+require('./tour')
+require('./teaser')

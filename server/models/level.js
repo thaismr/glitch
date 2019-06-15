@@ -4,20 +4,22 @@ const Schema = mongoose.Schema
 const LevelSchema = new Schema({
   name: { type: String },
   exp: { type: Number, default: 0 },
+  description: { type: String },
+  channels: [{
+    type: Schema.Types.ObjectId,
+    ref: 'channel'
+  }],
   tours: [{
     type: Schema.Types.ObjectId,
     ref: 'tour'
-  }],
-  users: [{
-    type: Schema.Types.ObjectId,
-    ref: 'user'
   }]
 })
 
-LevelSchema.statics.findUsers = function(id) {
+/*
+LevelSchema.statics.findChannels = function(id) {
   return this.findById(id)
-  .populate('users')
-  .then(level => level.users)
+    .populate('channels')
+    .then(level => level.channels)
 }
 
 LevelSchema.statics.findTours = function(id) {
@@ -25,5 +27,6 @@ LevelSchema.statics.findTours = function(id) {
   .populate('tours')
   .then(level => level.tours)
 }
+*/
 
 mongoose.model('level', LevelSchema)
