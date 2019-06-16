@@ -1,8 +1,19 @@
 import React, { Component } from 'react'
+//import React from 'react'
+import styled from 'styled-components'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import query from '../queries/fetchTours'
+
+export const PageWrapper = styled.div`
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+`
 
 class TourList extends Component {
   onTourDelete(id) {
@@ -11,28 +22,31 @@ class TourList extends Component {
   }
 
   renderTours() {
-    return this.props.data.tours.map(({ id, title }) => {
-      return (
-        <li key={id} className="collection-item">
-          <Link to={`/tours/${id}`}>
-            {title}
-          </Link>
-          <i
-            className="material-icons"
-            onClick={() => this.onTourDelete(id)}
-          >
-            delete
-          </i>
-        </li>
+    return (
+      this.props.data.tours.map(({ id, title }) => {
+            return (
+              <li key={id} className="collection-item">
+                <Link to={`/tours/${id}`}>
+                  {title}
+                </Link>
+                <i
+                  className="material-icons"
+                  onClick={() => this.onTourDelete(id)}
+                >
+                  delete
+                </i>
+              </li>
+            )
+          })
       )
-    })
-  }
+    }
 
   render() {
     if(this.props.data.loading) { return <div>Loading...</div>}
 
     return (
-      <div>
+      <PageWrapper>
+
         <ul className="collection">
           {this.renderTours()}
         </ul>
@@ -42,7 +56,8 @@ class TourList extends Component {
         >
           <i className="material-icons">add</i>
         </Link>
-      </div>
+
+      </PageWrapper>
     )
   }
 }

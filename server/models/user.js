@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt-nodejs')
+const bcrypt = require('bcryptjs')
 const crypto = require('crypto')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema

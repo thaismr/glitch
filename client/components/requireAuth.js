@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
-import { hashHistory } from 'react-router'
+import { Redirect } from 'react-router-dom'
 import currentUser from '../queries/currentUser'
 
 export default (WrappedComponent) => {
   class RequireAuth extends Component {
     componentWillUpdate(nextProps) {
       if ( !nextProps.data.loading && !nextProps.data.currentUser ) {
-        hashHistory.push('/login')
+        <Redirect to={{pathname: '/login'}} />
       }
     }
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import CommentCreate from './CommentCreate'
 import CommentList from './CommentList'
 import fetchTour from '../queries/fetchTour'
@@ -34,14 +34,14 @@ class TourShow extends Component {
         <Link to="/">Back</Link>
         <h4>{tour.title}</h4>
 
-        {tour.user.name&&
+        {tour.user.name &&
           <span>{tour.user.name}</span>
         }
 
-        {tour.level.name&&
+        {tour.level.name &&
           <span> | {tour.level.name}</span>
         }
-        
+
         <div>{tour.content}</div>
         <div className="upvotes">
           <i

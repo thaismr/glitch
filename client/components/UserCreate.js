@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
-import { Link, hashHistory } from 'react-router'
+import { Link, Redirect } from 'react-router-dom'
 import gql from 'graphql-tag'
 
 class UserCreate extends Component {
@@ -20,7 +20,7 @@ class UserCreate extends Component {
       variables: {
         userName: this.state.userName
       }
-    }).then(() => hashHistory.push('/'))
+    }).then(() => <Redirect to={{pathname:'/'}} />)
   }
 
   render() {

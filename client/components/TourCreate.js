@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
-import { Link, hashHistory } from 'react-router'
+import { Link, Redirect } from 'react-router-dom'
 import gql from 'graphql-tag'
 import query from '../queries/fetchTours'
 
@@ -30,7 +30,7 @@ class TourCreate extends Component {
         content: this.state.content
       },
       refetchQueries: [{ query }]
-    }).then(() => hashHistory.push('/'))
+    }).then(() => <Redirect to={{pathname: '/'}} />)
 
 
   }

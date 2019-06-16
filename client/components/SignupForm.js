@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import AuthForm from './AuthForm'
 import { graphql } from 'react-apollo'
-import { hashHistory } from 'react-router'
+import { Redirect } from 'react-router-dom'
 import mutation from '../mutations/signup'
 import query from '../queries/currentUser'
 
@@ -16,7 +16,7 @@ class SignupForm extends Component {
 
   componentWillUpdate(nextProps) {
     if (nextProps.data.currentUser) {
-      hashHistory.push('/dashboard')
+      <Redirect to={{pathname: '/dashboard'}} />
     }
   }
 

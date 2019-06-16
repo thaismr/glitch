@@ -1,9 +1,11 @@
-import './style/style.css'
+//import './style/style.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Router, Route, hashHistory, IndexRoute } from 'react-router'
-import ApolloClient, { createNetworkInterface } from 'apollo-client'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { ApolloClient } from 'apollo-client'
+import { HttpLink } from 'apollo-link-http'
 import { ApolloProvider } from 'react-apollo'
+import { InMemoryCache } from 'apollo-cache-inmemory'
 
 import App from './components/App'
 import LoginForm from './components/LoginForm'
@@ -15,31 +17,29 @@ import TourCreate from './components/TourCreate'
 import UserCreate from './components/UserCreate'
 import requireAuth from './components/requireAuth'
 
-const networkInterface = createNetworkInterface({
+const link = new HttpLink({
   uri: '/graphql',
-  opts: {
-    credentials: 'same-origin'
-  }
+  credentials: 'same-origin'
 })
 
 const client = new ApolloClient({
-  networkInterface,
+  cache: new InMemoryCache(),
+  link,
   dataIdFromObject: o => o.id
 })
 
 const Root = () => {
   return (
     <ApolloProvider client={client}>
-      <Router history={hashHistory}>
-        <Route path="/" component={App}>
-          <IndexRoute component={TourList} />
+      <Router>
+        <Route path="*" component={App} />
+          <Route exact path="/" component={TourList} />
           <Route path="login" component={LoginForm} />
           <Route path="signup" component={SignupForm} />
           <Route path="dashboard" component={requireAuth(Dashboard)} />
           <Route path="tours/new" component={requireAuth(TourCreate)} />
           <Route path="users/new" component={UserCreate} />
           <Route path="tours/:id" component={requireAuth(TourShow)} />
-        </Route>
       </Router>
     </ApolloProvider>
   )
