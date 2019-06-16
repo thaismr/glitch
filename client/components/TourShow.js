@@ -33,7 +33,15 @@ class TourShow extends Component {
       <div>
         <Link to="/">Back</Link>
         <h4>{tour.title}</h4>
-        {tour.user.name} | {tour.level.name}
+
+        {tour.user.name&&
+          <span>{tour.user.name}</span>
+        }
+
+        {tour.level.name&&
+          <span> | {tour.level.name}</span>
+        }
+        
         <div>{tour.content}</div>
         <div className="upvotes">
           <i
