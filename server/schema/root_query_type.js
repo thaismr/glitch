@@ -47,10 +47,13 @@ const RootQueryType = new GraphQLObjectType({
         return Level.find({})
       }
     },
-    channels: { //maybe irrelevant
-      type: new GraphQLList(ChannelType),
-      resolve() {
-        return Channel.find({})
+    level: {
+      type: LevelType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parentValue, { id }) {
+        return Level.findById(id)
       }
     },
     tours: {

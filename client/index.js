@@ -6,16 +6,18 @@ import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { ApolloProvider } from 'react-apollo'
 import { InMemoryCache } from 'apollo-cache-inmemory'
-import App from './components/App'
-import LoginForm from './components/LoginForm'
-import SignupForm from './components/SignupForm'
-import Dashboard from './components/Dashboard'
-import LevelList from './components/LevelList'
-import TourList from './components/TourList'
-import TourShow from './components/TourShow'
-import TourCreate from './components/TourCreate'
-import UserCreate from './components/UserCreate'
-import requireAuth from './components/requireAuth'
+import App from './src/components/App'
+import LoginForm from './src/components/LoginForm'
+import SignupForm from './src/components/SignupForm'
+import Dashboard from './src/components/Dashboard'
+import LevelList from './src/screens/Level/LevelList'
+import LevelShow from './src/screens/Level/LevelShow'
+import Test from './src/screens/Level/Test'
+import TourList from './src/components/TourList'
+import TourShow from './src/components/TourShow'
+import TourCreate from './src/components/TourCreate'
+import UserCreate from './src/components/UserCreate'
+import requireAuth from './src/components/requireAuth'
 
 const link = new HttpLink({
   uri: '/graphql',
@@ -37,6 +39,7 @@ const Root = () => {
             <Route path="/" exact component={LevelList} />
             <Route path="/login" component={LoginForm} />
             <Route path="/signup" component={SignupForm} />
+            <Route path="/level/:id" component={LevelShow} />
             <Route path="/dashboard" component={requireAuth(Dashboard)} />
             <Route path="/tours/new" component={requireAuth(TourCreate)} />
             <Route path="/users/new" component={UserCreate} />
