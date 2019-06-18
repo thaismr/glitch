@@ -12,6 +12,7 @@ import SignupForm from './src/components/SignupForm'
 import Dashboard from './src/components/Dashboard'
 import LevelList from './src/screens/Level/LevelList'
 import LevelShow from './src/screens/Level/LevelShow'
+import Channel from './src/screens/Channel/Channel'
 import Test from './src/screens/Level/Test'
 import TourList from './src/components/TourList'
 import TourShow from './src/components/TourShow'
@@ -40,6 +41,7 @@ const Root = () => {
             <Route path="/login" component={LoginForm} />
             <Route path="/signup" component={SignupForm} />
             <Route path="/level/:id" component={LevelShow} />
+            <Route path="/channel/:id" component={Channel} />
             <Route path="/dashboard" component={requireAuth(Dashboard)} />
             <Route path="/tours/new" component={requireAuth(TourCreate)} />
             <Route path="/users/new" component={UserCreate} />

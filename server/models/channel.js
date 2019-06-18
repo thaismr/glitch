@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const Level = mongoose.model('level')
 
 const ChannelSchema = new Schema({
   name: { type: String },
