@@ -6,6 +6,7 @@ module.exports = {
   mode: 'development',
   output: {
     path: '/',
+    publicPath: '/',
     filename: 'bundle.js'
   },
   module: {
@@ -14,14 +15,15 @@ module.exports = {
         use: 'babel-loader',
         test: /\.js$/,
         exclude: /node_modules/
-        //exclude: /node_modules\/react-apollo/,
-        //test: /\.(js|jsx|mjs)$/
       },
       {
         use: ['style-loader', 'css-loader'],
         test: /\.css$/
       }
     ]
+  },
+  devServer: {
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({

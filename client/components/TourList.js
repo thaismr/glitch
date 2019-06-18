@@ -6,6 +6,13 @@ import { graphql } from 'react-apollo'
 import { Link } from 'react-router-dom'
 import query from '../queries/fetchTours'
 
+const mutation = gql`
+  mutation DeleteTour($id: ID) {
+    deleteTour(id: $id) {
+      id
+    }
+  }
+`
 export const PageWrapper = styled.div`
   flex: 1;
   width: 100%;
@@ -61,14 +68,6 @@ class TourList extends Component {
     )
   }
 }
-
-const mutation = gql`
-  mutation DeleteTour($id: ID) {
-    deleteTour(id: $id) {
-      id
-    }
-  }
-`
 
 // calls graphql, wich returns a function, and calls that function
 export default graphql(mutation)(
