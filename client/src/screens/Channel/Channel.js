@@ -15,7 +15,7 @@ const Channel = (props) => {
     const [page, setPage] = useState(0)
     const channel = props.match.params.id
 
-    const transitions = useTransition(page, null, {
+    const transitions = useTransition(page, p => p, {
       from: { opacity: 0, transform: 'translate3d(100%,0,0)' },
       enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
       leave: { opacity: 0, transform: 'translate3d(-50%,0,0)' },
@@ -24,8 +24,8 @@ const Channel = (props) => {
     return (
       <Flex>
         <Box>
-          <Box onClick={useCallback(() => setPage(0),[])}>Tours</Box>
-          <Box onClick={useCallback(() => setPage(1),[])}>Teasers</Box>
+          <Box onClick={useCallback(() => setPage(0),[page])}>Tours</Box>
+          <Box onClick={useCallback(() => setPage(1),[page])}>Teasers</Box>
         </Box>
         {
           transitions.map(({ item, props, key }) => {
