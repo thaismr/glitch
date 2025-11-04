@@ -28,7 +28,7 @@
     "babel-preset-react": "^6.22.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.16.0",
-    "connect-mongo": "^4.5.0",
+    "connect-mongo": "^4.6.0",
     "css-loader": "^6.7.3",
     "express": "^4.21.2",
     "express-graphql": "^0.6.1",
@@ -46,7 +46,7 @@
     "react-dom": "^17.0.2",
     "react-router": "^3.0.2",
     "style-loader": "^0.13.1",
-    "webpack": "^5.76.0",
-    "webpack-dev-middleware": "^5.3.4"
+    "webpack": "^5.102.1",
+    "webpack-dev-middleware": "^1.9.0"
   }
 }
